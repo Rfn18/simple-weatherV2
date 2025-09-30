@@ -15,7 +15,7 @@ const search = document.querySelector(".container-search");
 const btnSubmit = document.getElementById("btnSubmit");
 const inpSearch = document.getElementById("inpSearch");
 
-const toggle = document.querySelector(".toggle")
+const toggle = document.querySelector(".slider");
 
 const now = new Date();
 
@@ -52,6 +52,10 @@ footer.addEventListener("click", (event) => {
 toggle.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
   document.querySelector(".sidebar").classList.toggle("dark-mode");
+  document.querySelector(".container-search").classList.toggle("dark-mode");
+  document.querySelector(".input-search").classList.toggle("dark-mode-search");
+  inpSearch.classList.toggle("dark-mode-color");
+  document.getElementById("btnSubmit").classList.toggle("dark-mode-color");
 });
 
 // Weather api
@@ -99,39 +103,82 @@ btnSubmit.addEventListener("click", () => {
   city = inpSearch.value;
 
   weather(city).then(() => {
-    let sunrise = new Date(datas.sys.sunrise * 1000).toLocaleString().split(",");
-    sunrise = sunrise[1].split(":");
-    console.log(sunrise)
-    let sunset = new Date(datas.sys.sunset * 1000).toLocaleString().split(",");
-    sunset = sunset[1].split(".");
-    let theSun;
-
-    if (now.getHours() < 12 && now.getHours() >= 1) {
-      ti = "AM";
-      timeGood = "Good Morning";
-      theSun = [sunrise[0] + ":" + sunrise[1] + " AM", "Sunrise"];
-      console.log(theSun)
-      timesIcon.classList.add("bi", "bi-sunrise-fill");
-    } else if (now.getHours() >= 12) {
-      ti = "PM";
-      timeGood = "Good Afternoon";
-      theSun = [sunset[0] + ":" + sunrise[1] + " PM", "Sunset"];
-      timesIcon.classList.add("bi", "bi-sunset-fill");
-      if (now.getHours() >= 17) { 
-        timeGood = "Good Night";
-      }
+    if (datas.cod === "404") {
+      alert(datas.message);
     } else {
-      return;
+      search.classList.add("hidden");
+      search.classList.remove("show");
+      let sunrise = new Date(datas.sys.sunrise * 1000)
+        .toLocaleString()
+        .split(",");
+      sunrise = sunrise[1].split(".");
+      console.log(sunrise);
+      let sunset = new Date(datas.sys.sunset * 1000)
+        .toLocaleString()
+        .split(",");
+      sunset = sunset[1].split(".");
+      let theSun;
+
+      if (now.getHours() < 12 && now.getHours() >= 1) {
+        ti = "AM";
+        timeGood = "Good Morning";
+        theSun = [sunrise[0] + ":" + sunrise[1] + " AM", "Sunrise"];
+        console.log(theSun);
+        timesIcon.classList.add("bi", "bi-sunrise-fill");
+      } else if (now.getHours() >= 12) {
+        ti = "PM";
+        timeGood = "Good Afternoon";
+        theSun = [sunset[0] + ":" + sunrise[1] + " PM", "Sunset"];
+        timesIcon.classList.add("bi", "bi-sunset-fill");
+        if (now.getHours() >= 17) {
+          timeGood = "Good Night";
+        }
+      } else {
+        return;
+      }
+
+      cityName.innerHTML = datas.name;
+      temp.innerHTML = datas.main.temp + "°C";
+      date.innerHTML = dayNow + " " + times + " " + ti;
+      tg.innerHTML = timeGood;
+      wind.innerHTML = datas.wind.speed + " m/s";
+      clock.innerHTML = theSun[0];
+      timeSun.innerHTML = theSun[1];
+
+      if (JSON.parse(localStorage.getItem("city name")) === null) {
+        localStorage.setItem("city name", JSON.stringify([city]));
+      } else {
+        const length = JSON.parse(localStorage.getItem("city name")).length;
+        for (let i = 0; i < length; i++) {
+          if (JSON.parse(localStorage.getItem("city name"))[i] === city) {
+            return;
+          }
+        }
+
+        let citys = JSON.parse(localStorage.getItem("city name") || "[]");
+        if (!Array.isArray(citys)) {
+          citys = [];
+        }
+
+        citys.push(city);
+        localStorage.setItem("city name", JSON.stringify(citys));
+      }
+
+      inpSearch.value = "";
     }
-
-    console.log(timeGood);
-
-    cityName.innerHTML = datas.name;
-    temp.innerHTML = datas.main.temp + "°C";
-    date.innerHTML = dayNow + " " + times + " " + ti;
-    tg.innerHTML = timeGood;
-    wind.innerHTML = datas.wind.speed + " m/s";
-    clock.innerHTML = theSun[0];
-    timeSun.innerHTML = theSun[1];
   });
+});
+
+function historys(citys) {
+  citys.forEach((city, index) => {
+    const history = document.querySelector(".container-history");
+    const li = document.createElement("li");
+    li.innerHTML = `${index + 1}. ${city}`;
+    history.appendChild(li);
+  });
+}
+
+window.addEventListener("load", () => {
+  const citys = JSON.parse(localStorage.getItem("city name"));
+  historys(citys);
 });
