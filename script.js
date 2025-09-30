@@ -1,6 +1,7 @@
 const sidebar = document.querySelector(".sidebar");
 const cityName = document.querySelector(".city-name");
 const main = document.querySelector("main");
+const footer = document.querySelector("footer");
 const temp = document.querySelector(".temp");
 const date = document.querySelector(".date");
 const tg = document.querySelector(".timeGood");
@@ -13,6 +14,8 @@ const btnSearch = document.getElementById("btnSearch");
 const search = document.querySelector(".container-search");
 const btnSubmit = document.getElementById("btnSubmit");
 const inpSearch = document.getElementById("inpSearch");
+
+const toggle = document.querySelector(".toggle")
 
 const now = new Date();
 
@@ -34,6 +37,21 @@ main.addEventListener("click", (event) => {
     search.classList.add("hidden");
     search.classList.remove("show");
   }
+});
+
+footer.addEventListener("click", (event) => {
+  if (event.target === footer) {
+    sidebar.classList.add("hidden");
+    sidebar.classList.remove("show");
+
+    search.classList.add("hidden");
+    search.classList.remove("show");
+  }
+});
+
+toggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+  document.querySelector(".sidebar").classList.toggle("dark-mode");
 });
 
 // Weather api
@@ -81,10 +99,9 @@ btnSubmit.addEventListener("click", () => {
   city = inpSearch.value;
 
   weather(city).then(() => {
-    let sunrise = new Date(datas.sys.sunrise * 1000)
-      .toLocaleString()
-      .split(",");
-    sunrise = sunrise[1].split(".");
+    let sunrise = new Date(datas.sys.sunrise * 1000).toLocaleString().split(",");
+    sunrise = sunrise[1].split(":");
+    console.log(sunrise)
     let sunset = new Date(datas.sys.sunset * 1000).toLocaleString().split(",");
     sunset = sunset[1].split(".");
     let theSun;
@@ -93,13 +110,14 @@ btnSubmit.addEventListener("click", () => {
       ti = "AM";
       timeGood = "Good Morning";
       theSun = [sunrise[0] + ":" + sunrise[1] + " AM", "Sunrise"];
+      console.log(theSun)
       timesIcon.classList.add("bi", "bi-sunrise-fill");
     } else if (now.getHours() >= 12) {
       ti = "PM";
       timeGood = "Good Afternoon";
       theSun = [sunset[0] + ":" + sunrise[1] + " PM", "Sunset"];
       timesIcon.classList.add("bi", "bi-sunset-fill");
-      if (now.getHours() >= 17) {
+      if (now.getHours() >= 17) { 
         timeGood = "Good Night";
       }
     } else {
