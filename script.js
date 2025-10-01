@@ -111,7 +111,7 @@ btnSubmit.addEventListener("click", () => {
       let sunrise = new Date(datas.sys.sunrise * 1000)
         .toLocaleString()
         .split(",");
-      sunrise = sunrise[1].split(".");
+      sunrise = sunrise[1].split(":");
       console.log(sunrise);
       let sunset = new Date(datas.sys.sunset * 1000)
         .toLocaleString()
@@ -172,9 +172,30 @@ btnSubmit.addEventListener("click", () => {
 function historys(citys) {
   citys.forEach((city, index) => {
     const history = document.querySelector(".container-history");
+    const card = document.createElement("div")
     const li = document.createElement("li");
-    li.innerHTML = `${index + 1}. ${city}`;
-    history.appendChild(li);
+    const i = document.createElement("i")
+    const p = document.createElement("p")
+    i.classList = ("bi", "bi-search")
+    card.classList = ("card-history")
+    history.appendChild(card)
+    li.innerHTML = `${city}`;
+    p.innerHTML = "x"
+    
+    card.addEventListener("click", () => {
+      inpSearch.value = city;
+    })
+
+    p.addEventListener("click", () => {
+      let citys = JSON.parse(localStorage.getItem("city name"));
+      citys = citys.filter(cit => cit !== city)
+
+      localStorage.setItem("city name", JSON.stringify(citys))
+    })
+
+    card.appendChild(i)
+    card.appendChild(li);
+    card.appendChild(p);
   });
 }
 

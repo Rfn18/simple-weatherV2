@@ -1,98 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Great+Vibes&family=Lily+Script+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-    <title>Simple Weather App</title>
-  </head>
 
-  <body>
-    <div class="sidebar">
-      <div class="profile">
-        <i class="fa-solid fa-user" id="user"></i>
-        <h1>Fasterino</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Great+Vibes&family=Lily+Script+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Simple Weather App</title>
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="profile">
+      <i class="fa-solid fa-user" id="user"></i>
+      <h1>Fasterino</h1>
+    </div>
+    <hr />
+    <label class="toggle">
+      <input type="checkbox" />
+      <span class="slider"></span>
+    </label>
+  </div>
+  <div class="container-search">
+    <div class="div-search">
+      <div class="input-search">
+        <i class="bi bi-search"></i>
+        <input type="text" name="inpSearch" id="inpSearch" placeholder="City name..." />
+      </div>
+      <button id="btnSubmit">Submit</button>
+    </div>
+    <!-- <div class="isEmpty">
+      <i class="bi bi-geo-fill"></i>
+      <p>Where your location...</p>
+    </div> -->
+    <div class="history">
+      <h1>Search History</h1>
+      <ul class="container-history">
+      </ul>
+    </div>
+  </div>
+
+  <header>
+    <div class="header-nav">
+      <i class="fa-solid fa-ellipsis-vertical" id="elipsis" onclick="btnMenu()"></i>
+      <i class="bi bi-search" id="btnSearch"></i>
+    </div>
+    <div class="container-header">
+      <h1 class="city-name">Kediri</h1>
+      <p class="date">Senin</p>
+    </div>
+  </header>
+  <main>
+    <i class="fa-solid fa-cloud" id="cloud"></i>
+    <div class="container-main">
+      <h1 class="temp">22 c</h1>
+      <p class="timeGood">Good Morning</p>
+    </div>
+  </main>
+
+  <footer>
+    <hr />
+    <div class="container-card">
+      <div class="card">
+        <i id="icon-times"></i>
+        <p class="times">sunrice</p>
+        <p class="clock">07:00 Am</p>
       </div>
       <hr />
-      <label class="toggle">
-        <input type="checkbox" />
-        <span class="slider"></span>
-      </label>
-    </div>
-    <div class="container-search">
-      <div class="div-search">
-        <div class="input-search">
-          <i class="bi bi-search"></i>
-          <input
-            type="text"
-            name="inpSearch"
-            id="inpSearch"
-            placeholder="City name..."
-          />
-        </div>
-        <button id="btnSubmit">Submit</button>
-      </div>
-      <div class="isEmpty">
-        <i class="bi bi-geo-fill"></i>
-        <p>Where your location...</p>
-      </div>
-      <div class="history">
-        <ul class="container-history"></ul>
+      <div class="card">
+        <i class="fa-solid fa-wind fa-2x"></i>
+        <p class="wind">wind</p>
+        <p class="wind-speed">4m/s</p>
       </div>
     </div>
+  </footer>
+</body>
+<script src="script.js"></script>
 
-    <header>
-      <div class="header-nav">
-        <i
-          class="fa-solid fa-ellipsis-vertical"
-          id="elipsis"
-          onclick="btnMenu()"
-        ></i>
-        <i class="bi bi-search" id="btnSearch"></i>
-      </div>
-      <div class="container-header">
-        <h1 class="city-name">Kediri</h1>
-        <p class="date">Senin</p>
-      </div>
-    </header>
-    <main>
-      <i class="fa-solid fa-cloud" id="cloud"></i>
-      <div class="container-main">
-        <h1 class="temp">22 c</h1>
-        <p class="timeGood">Good Morning</p>
-      </div>
-    </main>
-
-    <footer>
-      <hr />
-      <div class="container-card">
-        <div class="card">
-          <i id="icon-times"></i>
-          <p class="times">sunrice</p>
-          <p class="clock">07:00 Am</p>
-        </div>
-        <hr />
-        <div class="card">
-          <i class="fa-solid fa-wind fa-2x"></i>
-          <p class="wind">wind</p>
-          <p class="wind-speed">4m/s</p>
-        </div>
-      </div>
-    </footer>
-  </body>
-  <script src="script.js"></script>
 </html>
