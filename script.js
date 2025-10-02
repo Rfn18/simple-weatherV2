@@ -237,7 +237,7 @@ function historys(citys) {
   });
 }
 
-if (localStorage.getItem("city name") == "[]") {
+if (localStorage.getItem("city name") == "[]" || localStorage.getItem("city name") == null) {
   search.classList.add("show");
   isEmpty.classList.add("visible");
   riwayat.classList.add("hidden");

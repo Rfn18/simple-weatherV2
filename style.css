@@ -96,6 +96,7 @@ a {
   display: flex;
   margin-bottom: 1em;
   gap: 0.5em;
+  font-size: 16px;
 }
 
 .sidebar-bottom {
@@ -337,13 +338,15 @@ main {
   height: 50%;
   flex-direction: column;
   align-items: center;
-  padding-top: 5em;
 }
 
 main img {
   position: absolute;
-  width: 300px;
-  top: 10em;
+  width: 70%;
+  top: 20vh;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 400px;
 }
 
 main .container-main {
@@ -459,7 +462,6 @@ footer .card p {
 
   .container-search {
     display: flex;
-    justify-content: center;
     padding: 0 40px;
   }
 
@@ -500,5 +502,36 @@ footer .card p {
 
   .sidebar {
     width: 30%;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  header .container-header h1 {
+    font-size: 36px;
+  }
+
+  header .container-header p {
+    font-size: 18px;
+  }
+
+  main img {
+    width: 250px;
+    top: 9em;
+  }
+
+  main .container-main h1 {
+    font-size: 40px;
+  }
+
+  main .container-main p {
+    font-size: 18px;
+  }
+
+  footer .container-card {
+    gap: 2em;
+  }
+
+  .sidebar {
+    width: 60%;
   }
 }
