@@ -134,7 +134,7 @@ btnSubmit.addEventListener("click", () => {
       sunset = sunset[1].split(".");
       let theSun;
 
-      if (sunrise === undefined || sunset === undefined) {
+      if (sunrise == undefined || sunset == undefined) {
         sunrise = sunrise[1].split(":");
         sunset = sunset[1].split(":");
       }
