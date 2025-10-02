@@ -297,7 +297,7 @@ input:checked + .slider:before {
 
 .history {
   margin-top: 2em;
-  height: 100%;
+  height: 200%;
   width: 100%;
   background-color: #1c352d;
   z-index: 1;
