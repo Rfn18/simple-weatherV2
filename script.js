@@ -326,7 +326,7 @@ btnSubmit.addEventListener("click", () => {
         citys.push(city);
         localStorage.setItem("city name", JSON.stringify(citys));
       }
-
+      window.location.reload();
       inpSearch.value = "";
     }
   });

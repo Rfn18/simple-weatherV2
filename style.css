@@ -235,7 +235,6 @@ input:checked + .slider:before {
   z-index: 1;
   -webkit-box-shadow: 0px 7px 18px -6px rgba(0, 0, 0, 0.47);
   box-shadow: 0px 7px 18px -6px rgba(0, 0, 0, 0.47);
-  padding: 1em;
   visibility: hidden;
 }
 
@@ -258,6 +257,7 @@ input:checked + .slider:before {
 .container-search .div-search {
   display: flex;
   gap: 1em;
+  margin: 1em 1em 0em 1em;
 }
 
 .container-search #btnSubmit {
@@ -297,16 +297,20 @@ input:checked + .slider:before {
 
 .history {
   margin-top: 2em;
-}
-
-.history h1 {
-  font-weight: 800;
+  height: 100%;
+  width: 100%;
+  background-color: #1c352d;
+  z-index: 1;
+  -webkit-box-shadow: 0px 7px 18px -6px rgba(0, 0, 0, 0.47);
+  box-shadow: 0px 7px 18px -6px rgba(0, 0, 0, 0.47);
+  padding-bottom: 2em;
 }
 
 .container-history {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  margin: 0 1em;
 }
 
 .card-history {
@@ -321,7 +325,6 @@ input:checked + .slider:before {
 
 .history h1 {
   font-size: 24px;
-  margin-bottom: 0.5em;
 }
 
 .card-history li {
@@ -463,6 +466,9 @@ footer .card p {
 
   .container-search {
     display: flex;
+  }
+
+  .container-history {
     padding: 0 40px;
   }
 
