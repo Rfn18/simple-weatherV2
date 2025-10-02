@@ -51,7 +51,7 @@ footer.addEventListener("click", (event) => {
   }
 });
 
-if (localStorage.getItem("dark mode") == "true") {
+if (localStorage.getItem("dark mode") == true) {
   document.body.classList.toggle("dark-mode");
   document.querySelector(".sidebar").classList.toggle("dark-mode");
   document.querySelector(".container-search").classList.toggle("dark-mode");
@@ -192,6 +192,7 @@ if (lastLenght !== -1) {
             a.classList.toggle("dark-mode-color");
           });
           inpSearch.classList.toggle("dark-mode-color");
+          document.getElementById("toggle-input").checked = true;
         }
       } else {
         return;
@@ -291,6 +292,8 @@ btnSubmit.addEventListener("click", () => {
             a.classList.toggle("dark-mode-color");
           });
           inpSearch.classList.toggle("dark-mode-color");
+          localStorage.setItem("dark mode", "true");
+          document.getElementById("toggle-input").checked = true;
         }
       } else {
         return;
