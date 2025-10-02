@@ -106,13 +106,13 @@ async function weather(city) {
 }
 
 const day = [
+  "Sunday",
   "Monday",
   "Tuesday",
   "Wednesday",
   "Thursday",
   "Friday",
   "Saturday",
-  "Sunday",
 ];
 const month = [
   "Januari",
