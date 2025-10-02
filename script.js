@@ -14,6 +14,8 @@ const btnSearch = document.getElementById("btnSearch");
 const search = document.querySelector(".container-search");
 const btnSubmit = document.getElementById("btnSubmit");
 const inpSearch = document.getElementById("inpSearch");
+const isEmpty = document.querySelector(".isEmpty");
+const riwayat = document.querySelector(".history");
 
 const toggle = document.querySelector(".slider");
 
@@ -54,8 +56,12 @@ toggle.addEventListener("click", () => {
   document.querySelector(".sidebar").classList.toggle("dark-mode");
   document.querySelector(".container-search").classList.toggle("dark-mode");
   document.querySelector(".input-search").classList.toggle("dark-mode-search");
-  inpSearch.classList.toggle("dark-mode-color");
+  document.querySelector(".container-auth").classList.toggle("default-mode");
   document.getElementById("btnSubmit").classList.toggle("dark-mode-color");
+  document.querySelectorAll("a").forEach((a) => {
+    a.classList.toggle("dark-mode-color");
+  });
+  inpSearch.classList.toggle("dark-mode-color");
 });
 
 // Weather api
@@ -79,7 +85,15 @@ async function weather(city) {
   }
 }
 
-const day = ["Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", "Minggu"];
+const day = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 const month = [
   "Januari",
   "Februari",
@@ -111,7 +125,7 @@ btnSubmit.addEventListener("click", () => {
       let sunrise = new Date(datas.sys.sunrise * 1000)
         .toLocaleString()
         .split(",");
-      sunrise = sunrise[1].split(":");
+      sunrise = sunrise[1].split(".");
       console.log(sunrise);
       let sunset = new Date(datas.sys.sunset * 1000)
         .toLocaleString()
@@ -132,10 +146,33 @@ btnSubmit.addEventListener("click", () => {
         timesIcon.classList.add("bi", "bi-sunset-fill");
         if (now.getHours() >= 17) {
           timeGood = "Good Night";
+          // dark mode when night come
+          document.body.classList.toggle("dark-mode");
+          document.querySelector(".sidebar").classList.toggle("dark-mode");
+          document
+            .querySelector(".container-search")
+            .classList.toggle("dark-mode");
+          document
+            .querySelector(".input-search")
+            .classList.toggle("dark-mode-search");
+          document
+            .querySelector(".container-auth")
+            .classList.toggle("default-mode");
+          document
+            .getElementById("btnSubmit")
+            .classList.toggle("dark-mode-color");
+          document.querySelectorAll("a").forEach((a) => {
+            a.classList.toggle("dark-mode-color");
+          });
+          inpSearch.classList.toggle("dark-mode-color");
         }
       } else {
         return;
       }
+      const cloudsCondition = datas.weather[0].main;
+      document.getElementById(
+        "cloud-icon"
+      ).src = `assets/${cloudsCondition}.png`;
 
       cityName.innerHTML = datas.name;
       temp.innerHTML = datas.main.temp + "°C";
@@ -172,31 +209,38 @@ btnSubmit.addEventListener("click", () => {
 function historys(citys) {
   citys.forEach((city, index) => {
     const history = document.querySelector(".container-history");
-    const card = document.createElement("div")
+    const card = document.createElement("div");
     const li = document.createElement("li");
-    const i = document.createElement("i")
-    const p = document.createElement("p")
-    i.classList = ("bi", "bi-search")
-    card.classList = ("card-history")
-    history.appendChild(card)
+    const i = document.createElement("i");
+    const p = document.createElement("p");
+    i.classList = ("bi", "bi-search");
+    card.classList = "card-history";
+    history.appendChild(card);
     li.innerHTML = `${city}`;
-    p.innerHTML = "x"
-    
+    p.innerHTML = "x";
+
     card.addEventListener("click", () => {
       inpSearch.value = city;
-    })
+    });
 
     p.addEventListener("click", () => {
       let citys = JSON.parse(localStorage.getItem("city name"));
-      citys = citys.filter(cit => cit !== city)
+      citys = citys.filter((cit) => cit !== city);
+      window.location.reload();
 
-      localStorage.setItem("city name", JSON.stringify(citys))
-    })
+      localStorage.setItem("city name", JSON.stringify(citys));
+    });
 
-    card.appendChild(i)
+    card.appendChild(i);
     card.appendChild(li);
     card.appendChild(p);
   });
+}
+
+if (localStorage.getItem("city name") == "[]") {
+  search.classList.add("show");
+  isEmpty.classList.add("visible");
+  riwayat.classList.add("hidden");
 }
 
 window.addEventListener("load", () => {
