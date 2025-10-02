@@ -126,12 +126,18 @@ btnSubmit.addEventListener("click", () => {
         .toLocaleString()
         .split(",");
       sunrise = sunrise[1].split(".");
+
       console.log(sunrise);
       let sunset = new Date(datas.sys.sunset * 1000)
         .toLocaleString()
         .split(",");
       sunset = sunset[1].split(".");
       let theSun;
+
+      if (sunrise === undefined || sunset === undefined) {
+        sunrise = sunrise[1].split(":");
+        sunset = sunset[1].split(":");
+      }
 
       if (now.getHours() < 12 && now.getHours() >= 1) {
         ti = "AM";
@@ -237,7 +243,10 @@ function historys(citys) {
   });
 }
 
-if (localStorage.getItem("city name") == "[]" || localStorage.getItem("city name") == null) {
+if (
+  localStorage.getItem("city name") == "[]" ||
+  localStorage.getItem("city name") == null
+) {
   search.classList.add("show");
   isEmpty.classList.add("visible");
   riwayat.classList.add("hidden");
