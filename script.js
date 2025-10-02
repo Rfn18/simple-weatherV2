@@ -255,8 +255,8 @@ btnSubmit.addEventListener("click", () => {
       let theSun;
 
       if (sunrise[1] == undefined || sunset[1] == undefined) {
-        sunrise = sunrise[1].split(":");
-        sunset = sunset[1].split(":");
+        sunrise = sunrise[0].split(":");
+        sunset = sunset[0].split(":");
       }
 
       if (now.getHours() < 12 && now.getHours() >= 1) {
