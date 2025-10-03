@@ -299,7 +299,7 @@ input:checked + .slider:before {
   margin-top: 2em;
   height: 200%;
   width: 100%;
-  background-color: #1c352d;
+  background-color: #eaeaea;
   z-index: 1;
   -webkit-box-shadow: 0px 7px 18px -6px rgba(0, 0, 0, 0.47);
   box-shadow: 0px 7px 18px -6px rgba(0, 0, 0, 0.47);
@@ -436,6 +436,11 @@ footer .card p {
 .visible {
   display: flex;
   visibility: visible;
+}
+
+.notVisible {
+  display: none;
+  visibility: hidden;
 }
 
 .dark-mode {

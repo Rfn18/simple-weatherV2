@@ -51,7 +51,8 @@ footer.addEventListener("click", (event) => {
   }
 });
 
-if (localStorage.getItem("dark mode") == true) {
+if (localStorage.getItem("dark mode") == "true") {
+  riwayat.classList.toggle("dark-mode")
   document.body.classList.toggle("dark-mode");
   document.querySelector(".sidebar").classList.toggle("dark-mode");
   document.querySelector(".container-search").classList.toggle("dark-mode");
@@ -66,6 +67,7 @@ if (localStorage.getItem("dark mode") == true) {
 }
 
 toggle.addEventListener("click", () => {
+  riwayat.classList.toggle("dark-mode")
   const isActive = document.body.classList.toggle("dark-mode");
   document.querySelector(".sidebar").classList.toggle("dark-mode");
   document.querySelector(".container-search").classList.toggle("dark-mode");
@@ -133,107 +135,6 @@ let dayNow = day[now.getDay()];
 let monthNow = month[now.getMonth()];
 let ti, timeGood;
 
-// Validasi jika localstorage kosong
-const lastLenght = JSON.parse(localStorage.getItem("city name")).length - 1;
-if (lastLenght !== -1) {
-  city = JSON.parse(localStorage.getItem("city name"))[lastLenght];
-  weather(city).then(() => {
-    if (datas.cod === "404") {
-      alert(datas.message);
-    } else {
-      search.classList.add("hidden");
-      search.classList.remove("show");
-      let sunrise = new Date(datas.sys.sunrise * 1000)
-        .toLocaleString()
-        .split(",");
-      sunrise = sunrise[1].split(".");
-
-      console.log(sunrise);
-      let sunset = new Date(datas.sys.sunset * 1000)
-        .toLocaleString()
-        .split(",");
-      sunset = sunset[1].split(".");
-      let theSun;
-
-      if (sunrise[1] == undefined || sunset[1] == undefined) {
-        sunrise = sunrise[0].split(":");
-        sunset = sunset[0].split(":");
-      }
-
-      if (now.getHours() < 12 && now.getHours() >= 1) {
-        ti = "AM";
-        timeGood = "Good Morning";
-        theSun = [sunrise[0] + ":" + sunrise[1] + " AM", "Sunrise"];
-        console.log(theSun);
-        timesIcon.classList.add("bi", "bi-sunrise-fill");
-      } else if (now.getHours() >= 12) {
-        ti = "PM";
-        timeGood = "Good Afternoon";
-        theSun = [sunset[0] + ":" + sunrise[1] + " PM", "Sunset"];
-        timesIcon.classList.add("bi", "bi-sunset-fill");
-        if (now.getHours() >= 17) {
-          timeGood = "Good Night";
-          // dark mode when night come
-          document.body.classList.toggle("dark-mode");
-          document.querySelector(".sidebar").classList.toggle("dark-mode");
-          document
-            .querySelector(".container-search")
-            .classList.toggle("dark-mode");
-          document
-            .querySelector(".input-search")
-            .classList.toggle("dark-mode-search");
-          document
-            .querySelector(".container-auth")
-            .classList.toggle("default-mode");
-          document
-            .getElementById("btnSubmit")
-            .classList.toggle("dark-mode-color");
-          document.querySelectorAll("a").forEach((a) => {
-            a.classList.toggle("dark-mode-color");
-          });
-          inpSearch.classList.toggle("dark-mode-color");
-          document.getElementById("toggle-input").checked = true;
-        }
-      } else {
-        return;
-      }
-      const cloudsCondition = datas.weather[0].main;
-      document.getElementById(
-        "cloud-icon"
-      ).src = `assets/${cloudsCondition}.png`;
-
-      cityName.innerHTML = datas.name;
-      temp.innerHTML = datas.main.temp + "°C";
-      date.innerHTML = dayNow + " " + times + " " + ti;
-      tg.innerHTML = timeGood;
-      wind.innerHTML = datas.wind.speed + " m/s";
-      clock.innerHTML = theSun[0];
-      timeSun.innerHTML = theSun[1];
-
-      if (JSON.parse(localStorage.getItem("city name")) === null) {
-        localStorage.setItem("city name", JSON.stringify([city]));
-      } else {
-        const length = JSON.parse(localStorage.getItem("city name")).length;
-        for (let i = 0; i < length; i++) {
-          if (JSON.parse(localStorage.getItem("city name"))[i] === city) {
-            return;
-          }
-        }
-
-        let citys = JSON.parse(localStorage.getItem("city name") || "[]");
-        if (!Array.isArray(citys)) {
-          citys = [];
-        }
-
-        citys.push(city);
-        localStorage.setItem("city name", JSON.stringify(citys));
-      }
-
-      inpSearch.value = "";
-    }
-  });
-}
-
 btnSubmit.addEventListener("click", () => {
   city = inpSearch.value;
 
@@ -274,6 +175,7 @@ btnSubmit.addEventListener("click", () => {
         if (now.getHours() >= 17) {
           timeGood = "Good Night";
           // dark mode when night come
+          riwayat.classList.toggle("dark-mode")
           document.body.classList.toggle("dark-mode");
           document.querySelector(".sidebar").classList.toggle("dark-mode");
           document
@@ -335,7 +237,121 @@ btnSubmit.addEventListener("click", () => {
   });
 });
 
-function historys(citys) {
+
+
+
+if (
+  localStorage.getItem("city name") == "[]" ||
+  localStorage.getItem("city name") == null
+) {
+  search.classList.add("show");
+  isEmpty.classList.add("visible");
+  riwayat.classList.add("notVisible")
+
+} else {
+
+  const lastLenght = JSON.parse(localStorage.getItem("city name")).length - 1;
+if (lastLenght !== -1) {
+  city = JSON.parse(localStorage.getItem("city name"))[lastLenght];
+  weather(city).then(() => {
+    if (datas.cod === "404") {
+      alert(datas.message);
+    } else {
+      search.classList.add("hidden");
+      search.classList.remove("show");
+      let sunrise = new Date(datas.sys.sunrise * 1000)
+        .toLocaleString()
+        .split(",");
+      sunrise = sunrise[1].split(".");
+
+      console.log(sunrise);
+      let sunset = new Date(datas.sys.sunset * 1000)
+        .toLocaleString()
+        .split(",");
+      sunset = sunset[1].split(".");
+      let theSun;
+
+      if (sunrise[1] == undefined || sunset[1] == undefined) {
+        sunrise = sunrise[0].split(":");
+        sunset = sunset[0].split(":");
+      }
+
+      if (now.getHours() < 12 && now.getHours() >= 1) {
+        ti = "AM";
+        timeGood = "Good Morning";
+        theSun = [sunrise[0] + ":" + sunrise[1] + " AM", "Sunrise"];
+        console.log(theSun);
+        timesIcon.classList.add("bi", "bi-sunrise-fill");
+      } else if (now.getHours() >= 12) {
+        ti = "PM";
+        timeGood = "Good Afternoon";
+        theSun = [sunset[0] + ":" + sunrise[1] + " PM", "Sunset"];
+        timesIcon.classList.add("bi", "bi-sunset-fill");
+        if (now.getHours() >= 17) {
+          timeGood = "Good Night";
+          // dark mode when night come
+          riwayat.classList.toggle("dark-mode")
+          document.body.classList.toggle("dark-mode");
+          document.querySelector(".sidebar").classList.toggle("dark-mode");
+          document
+            .querySelector(".container-search")
+            .classList.toggle("dark-mode");
+          document
+            .querySelector(".input-search")
+            .classList.toggle("dark-mode-search");
+          document
+            .querySelector(".container-auth")
+            .classList.toggle("default-mode");
+          document
+            .getElementById("btnSubmit")
+            .classList.toggle("dark-mode-color");
+          document.querySelectorAll("a").forEach((a) => {
+            a.classList.toggle("dark-mode-color");
+          });
+          inpSearch.classList.toggle("dark-mode-color");
+          document.getElementById("toggle-input").checked = true;
+        }
+      } else {
+        return;
+      }
+      const cloudsCondition = datas.weather[0].main;
+      document.getElementById(
+        "cloud-icon"
+      ).src = `assets/${cloudsCondition}.png`;
+
+      cityName.innerHTML = datas.name;
+      temp.innerHTML = datas.main.temp + "°C";
+      date.innerHTML = dayNow + " " + times + " " + ti;
+      tg.innerHTML = timeGood;
+      wind.innerHTML = datas.wind.speed + " m/s";
+      clock.innerHTML = theSun[0];
+      timeSun.innerHTML = theSun[1];
+
+      if (JSON.parse(localStorage.getItem("city name")) === null) {
+        localStorage.setItem("city name", JSON.stringify([city]));
+      } else {
+        const length = JSON.parse(localStorage.getItem("city name")).length;
+        for (let i = 0; i < length; i++) {
+          if (JSON.parse(localStorage.getItem("city name"))[i] === city) {
+            return;
+          }
+        }
+
+        let citys = JSON.parse(localStorage.getItem("city name") || "[]");
+        if (!Array.isArray(citys)) {
+          citys = [];
+        }
+
+        citys.push(city);
+        localStorage.setItem("city name", JSON.stringify(citys));
+      }
+
+      inpSearch.value = "";
+    }
+  });
+}
+
+  function historys(citys) {
   citys.forEach((city, index) => {
     const history = document.querySelector(".container-history");
     const card = document.createElement("div");
@@ -366,16 +382,11 @@ function historys(citys) {
   });
 }
 
-if (
-  localStorage.getItem("city name") == "[]" ||
-  localStorage.getItem("city name") == null
-) {
-  search.classList.add("show");
-  isEmpty.classList.add("visible");
-  riwayat.classList.add("hidden");
-}
-
 window.addEventListener("load", () => {
   const citys = JSON.parse(localStorage.getItem("city name"));
   historys(citys);
 });
+
+}
+
+
